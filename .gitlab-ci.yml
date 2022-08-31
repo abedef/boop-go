@@ -1,6 +1,16 @@
 ---
-run-go:
-  stage: build
+#run-go:
+#  stage: build
+#  script:
+#    - sqlc generate
+#    - go build .
+
+deploy-proxmox:
+  tags:
+    - boop
+  stage: deploy
   script:
-    - sqlc generate
-    - go build .
+    - pushd /srv/boop-server
+    - find . -delete
+    - popd
+    - cp -r . /srv/boop-server
