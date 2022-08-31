@@ -13,7 +13,7 @@ import (
 func run() error {
 	ctx := context.Background()
 
-	db, err := sql.Open("postgres", "user=postgres dbname=boop sslmode=disable")
+	db, err := sql.Open("postgres", "user=postgres sslmode=disable")
 	if err != nil {
 		return err
 	}
