@@ -1,10 +1,6 @@
 ---
-sqlc-generate:
+run-go:
   stage: build
   script:
     - sqlc generate
-
-go-build:
-  stage: build
-  script:
     - go build .
