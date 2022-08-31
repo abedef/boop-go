@@ -1,3 +1,4 @@
+---
 sqlc-generate:
   stage: build
   script:
