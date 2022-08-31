@@ -5,9 +5,31 @@
 #    - sqlc generate
 #    - go build .
 
-deploy-proxmox:
+deploy-proxmox-abed:
   tags:
-    - boop
+    - ichi
+  stage: deploy
+  script:
+    - pushd /srv/boop-server
+    - find . -delete
+    - popd
+    - cp -r . /srv/boop-server
+    - sudo /usr/bin/systemctl restart boop-server
+
+deploy-proxmox-raed:
+  tags:
+    - ni
+  stage: deploy
+  script:
+    - pushd /srv/boop-server
+    - find . -delete
+    - popd
+    - cp -r . /srv/boop-server
+    - sudo /usr/bin/systemctl restart boop-server
+
+deploy-proxmox-elena:
+  tags:
+    - san
   stage: deploy
   script:
     - pushd /srv/boop-server
