@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func handleTasks(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
@@ -74,11 +75,30 @@ func handleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queri
 		var boops []pgdb.Boop
 		var err error
 		if folder != "" {
+			log.Print(folder)
+			if strings.HasPrefix(folder, "@") {
+				log.Printf("Querying specific Boop %v", folder)
+				boopIdString := strings.TrimPrefix(folder, "@")
+				boopId, err := strconv.ParseInt(boopIdString, 10, 32)
+				if err != nil {
+					log.Printf("Error parsing boop @%v", boopIdString)
+					return err
+				}
+				boop, err := queries.GetBoop(ctx, int32(boopId))
+				if err != nil {
+					log.Printf("Error fetching boop: %v", err)
+					return err
+				}
+				boops = []pgdb.Boop{
+					boop,
+				}
+			} else {
 			log.Printf("Narrowing Boops down to those in folder %v", folder)
 			boops, err = queries.GetBoopsFolder(ctx, folder)
 			if err != nil {
 				log.Printf("Error fetching boops: %v", err)
 				return err
+				}
 			}
 		} else {
 			boops, err = queries.GetBoops(ctx)

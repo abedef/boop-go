@@ -1,3 +1,7 @@
+-- name: GetBoop :one
+SELECT * FROM boops
+WHERE id = $1;
+
 -- name: GetBoops :many
 SELECT * FROM boops ORDER BY id DESC;
 
