@@ -1,0 +1,35 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "generate pgdb package",
+            "type": "shell",
+            "command": "sqlc generate",
+        },
+        {
+            "label": "build boopd docker image",
+            "type": "shell",
+            "command": "docker build --file cmd/boopd/Dockerfile -t boopd .",
+            "dependsOn": "generate pgdb package",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "clean up old boop-server container",
+            "type": "shell",
+            "command": "docker container rm --force boop-server",
+            "dependsOn": "build boopd docker image"
+        },
+        {
+            "label": "run new instance of boopd as boop-server",
+            "type": "shell",
+            "command": "docker run -d --restart unless-stopped --name boop-server boopd",
+            "dependsOn": "clean up old boop-server container"
+        }
+    ]
+}

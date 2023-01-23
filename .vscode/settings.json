@@ -1,8 +1,0 @@
-{
-    "files.exclude": {
-        "**/go.mod": true,
-        "**/go.sum": true,
-        "**/pgdb": true,
-        "**/run.sh": true
-    }
-}

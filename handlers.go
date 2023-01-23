@@ -1,9 +1,9 @@
-package main
+package boop
 
 import (
 	"context"
 	"errors"
-	"io/ioutil"
+	"io"
 	"junk/boop-server/pgdb"
 	"log"
 	"net/http"
@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func handleTasks(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
+func HandleTasks(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
 	log.Printf("Handling %v request for %v", r.Method, r.URL.Path)
 	if r.URL.Query().Get("From") != "+14164521467" {
 		log.Print("Tried to communicate with endpoint without the \"From\" query parameter")
@@ -25,7 +25,7 @@ func handleTasks(w *MyResponseWriter, r *http.Request, ctx context.Context, quer
 	return w.WriteJSON(transformBoops(boops))
 }
 
-func handleEvents(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
+func HandleEvents(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
 	log.Printf("Handling %v request for %v", r.Method, r.URL.Path)
 	if r.URL.Query().Get("From") != "+14164521467" {
 		log.Print("Tried to communicate with endpoint without the \"From\" query parameter")
@@ -40,7 +40,7 @@ func handleEvents(w *MyResponseWriter, r *http.Request, ctx context.Context, que
 	return w.WriteJSON(transformBoops(filtered_boops))
 }
 
-func handleBeans(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
+func HandleBeans(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
 	log.Printf("Handling %v request for %v", r.Method, r.URL.Path)
 	if r.URL.Query().Get("From") != "+14164521467" {
 		log.Print("Tried to communicate with endpoint without the \"From\" query parameter")
@@ -60,7 +60,7 @@ func handleBeans(w *MyResponseWriter, r *http.Request, ctx context.Context, quer
 	return w.WriteJSON(BeanSummary{Totals: simplifiedBeans, Boops: transformBoops(filtered_boops)})
 }
 
-func handleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
+func HandleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {
 	log.Printf("Handling %v request for %v", r.Method, r.URL.Path)
 	// John's number:         +16473366972
 	switch r.Method {
@@ -93,11 +93,11 @@ func handleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queri
 					boop,
 				}
 			} else {
-			log.Printf("Narrowing Boops down to those in folder %v", folder)
-			boops, err = queries.GetBoopsFolder(ctx, folder)
-			if err != nil {
-				log.Printf("Error fetching boops: %v", err)
-				return err
+				log.Printf("Narrowing Boops down to those in folder %v", folder)
+				boops, err = queries.GetBoopsFolder(ctx, folder)
+				if err != nil {
+					log.Printf("Error fetching boops: %v", err)
+					return err
 				}
 			}
 		} else {
@@ -127,7 +127,7 @@ func handleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queri
 		}
 		body := r.Form.Get("Body")
 		if body == "" {
-			bodyBytes, err := ioutil.ReadAll(r.Body)
+			bodyBytes, err := io.ReadAll(r.Body)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -176,7 +176,7 @@ func handleRoot(w *MyResponseWriter, r *http.Request, ctx context.Context, queri
 
 		body := r.Form.Get("Body")
 		if body == "" {
-			bodyBytes, err := ioutil.ReadAll(r.Body)
+			bodyBytes, err := io.ReadAll(r.Body)
 			if err != nil {
 				log.Fatal(err)
 			}

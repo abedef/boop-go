@@ -1,4 +1,4 @@
-package main
+package boop
 
 import (
 	"context"
@@ -50,7 +50,7 @@ func (rw *MyResponseWriter) WriteString(str string) error {
 	_, err := rw.w.Write([]byte(str))
 	return err
 }
-func (rw *MyResponseWriter) WriteJSON(v any) error {
+func (rw *MyResponseWriter) WriteJSON(v interface{}) error {
 	data, err := json.Marshal(v)
 	if err != nil {
 		return err

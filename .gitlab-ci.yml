@@ -1,4 +1,5 @@
 ---
+# TODO Build exe separately and run that file only
 #run-go:
 #  stage: build
 #  script:
@@ -8,28 +9,6 @@
 deploy-proxmox-abed:
   tags:
     - ichi
-  stage: deploy
-  script:
-    - pushd /srv/boop-server
-    - find . -delete
-    - popd
-    - cp -r . /srv/boop-server
-    - sudo /usr/bin/systemctl restart boop-server
-
-deploy-proxmox-raed:
-  tags:
-    - ni
-  stage: deploy
-  script:
-    - pushd /srv/boop-server
-    - find . -delete
-    - popd
-    - cp -r . /srv/boop-server
-    - sudo /usr/bin/systemctl restart boop-server
-
-deploy-proxmox-elena:
-  tags:
-    - san
   stage: deploy
   script:
     - pushd /srv/boop-server
