@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"database/sql"
-	"junk/boop-server"
-	"junk/boop-server/pgdb"
+	"github.com/abedef/boop-go"
+	"github.com/abedef/boop-go/pgdb"
 	"log"
 	"net/http"
 

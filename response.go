@@ -3,9 +3,10 @@ package boop
 import (
 	"context"
 	"encoding/json"
-	"junk/boop-server/pgdb"
 	"net/http"
 	"time"
+
+	"github.com/abedef/boop-go/pgdb"
 )
 
 type Bean struct {

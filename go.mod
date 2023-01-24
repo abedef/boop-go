@@ -1,4 +1,4 @@
-module junk/boop-server
+module github.com/abedef/boop-go
 
 go 1.16
 

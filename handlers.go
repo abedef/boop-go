@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"io"
-	"junk/boop-server/pgdb"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/abedef/boop-go/pgdb"
 )
 
 func HandleTasks(w *MyResponseWriter, r *http.Request, ctx context.Context, queries *pgdb.Queries) error {

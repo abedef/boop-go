@@ -2,12 +2,13 @@ package boop
 
 import (
 	"fmt"
-	"junk/boop-server/pgdb"
 	"log"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/abedef/boop-go/pgdb"
 )
 
 func filterBoops(filter func(pgdb.Boop) bool, boops []pgdb.Boop) []pgdb.Boop {
