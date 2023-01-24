@@ -1,5 +1,7 @@
 # boop
 
+[![pipeline status](https://gitlab.com/genieindex/boop-go/badges/master/pipeline.svg)](https://gitlab.com/genieindex/boop-go/-/commits/master)
+
 [boop.pdf](https://github.com/abedef/boop-go/files/10492741/boop.pdf)
 
 boop is an experimental information capture and recall system, supporting syntax lightly inspired by [sowhat](https://github.com/tatatap-com/sowhat)
